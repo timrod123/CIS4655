@@ -29,7 +29,6 @@
       <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
       <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
-  </head>
 
   <body>
 
@@ -90,10 +89,38 @@
   </div>
 </div>
 
-<div class="alert alert-info alert-dismissable">
-  <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-  <strong>Update!</strong> We have added <a href="http://sotd.us/timothyrodriguez/Advanced%20Mobile%20Web%20Application%20Development/CIS4655/Module_6/Gallery.html" class="alert-link">new products</a>.
-</div>
+<button onclick="notifyMe()">Update!</button>
+
+<script>
+function notifyMe() {
+// Let's check if the browser supports notifications
+if (!("Notification" in window)) {
+  alert("This browser does not support system notifications");
+  // This is not how you would really do things if they aren't supported. :)
+}
+
+// Let's check whether notification permissions have already been granted
+else if (Notification.permission === "granted") {
+  // If it's okay let's create a notification
+  var notification = new Notification("New content has been added. Check it out!");
+}
+
+// Otherwise, we need to ask the user for permission
+else if (Notification.permission !== 'denied') {
+  Notification.requestPermission(function (permission) {
+    // If the user accepts, let's create a notification
+    if (permission === "granted") {
+      var notification = new Notification("New has been added. Check it out!");
+    }
+  });
+}
+setTimeout(notification.close.bind(notification), 10000);
+
+// Finally, if the user has denied notifications and you
+// want to be respectful there is no need to bother them any more.
+}
+</script>
+
 
     <hr>
 
